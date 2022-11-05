@@ -12,7 +12,7 @@
     "css:compile": "sass --style expanded --source-map --embed-sources --no-error-css ./scss:../css",
     "css:compile:watch": "sass --watch --style expanded --source-map --embed-sources --no-error-css ./scss:../css",
     "css:prefix": "postcss  --config .  --replace \"../css/*.css\"",
-    "css:minify": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --input-source-map ../css/style.css.map --source-map-inline-sources --output ../css/style.min.css ../css/style.css",
+    "css:minify": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --input-source-map ../css/taxonomy-filter.css.map --source-map-inline-sources --output ../css/taxonomy-filter.min.css ../css/taxonomy-filter.css",
     "js": "npm-run-all js:once js:minify",
     "js:watch": "tsc --project . --watch",
     "js:once": "tsc --project .",

@@ -124,7 +124,7 @@ class TaxonomyFilterPlugin extends Plugin
         /** @var Assets */
         $assets = $this->grav['assets'];
 
-        $assets->addCss("plugin://{$this->name}/css/style$minified.css");
+        $assets->addCss("plugin://{$this->name}/css/taxonomy-filter$minified.css");
         $assets->addJs(
             "plugin://{$this->name}/js/taxonomy-filter$minified.js",
             ['group' => 'head', 'position' => 'after', 'loading' => 'defer']

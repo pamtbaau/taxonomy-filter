@@ -1,40 +1,36 @@
 {% set taxlist = children_only is defined ? taxonomylist.getChildPagesTags() : taxonomylist.get() %}
 
 {% if taxlist %}
+    <div id="taxonomy-filter">
+        {% for taxon in config.plugins['taxonomy-filter'].taxonomies %}
+            {% set selectedTaxList = uri.param(taxon | url_encode) | split(',') %}
 
-	{# Placeholder, will not be submitted itself #}
-	<form id="taxonomy-filter">
-		{% for taxonomy in config.plugins['taxonomy-filter'].taxonomies %}
-			<h5 class="taxonomy-title">{{ taxonomy | capitalize }}</h5>
-			<div class="taxonomy-group">
-				{% for taxon, value in taxlist[taxonomy] %}
-					{% set selectedTaxList = uri.param(taxonomy) | split(',') %}
-					{% set active = (taxon in selectedTaxList) ? 'checked' : '' %}
+            <h5 class="taxon-title">{{ taxon | capitalize }}</h5>
+            <div class="taxon-group">
+                {% for value, count in taxlist[taxon] %}
+                    {% set checked = (value in selectedTaxList) ? 'checked' : '' %}
 
-					<div class="form-group">
-						<input id="{{ taxonomy ~ '-' ~ taxon }}" name="{{ taxonomy ~ '-' ~ taxon }}" 
-							type="checkbox" {{ active }}>
-						<label for="{{ taxonomy ~ '-' ~ taxon }}">{{ taxon | capitalize }}</label>
-					</div>
-				{% endfor %}
-			</div>
-		{% endfor %}
+                    <div class="form-group">
+                        <input taxon="{{ taxon }}" taxonvalue="{{ value}}" type="checkbox" {{ checked }}>
+                        <label for="field{{ index }}">{{ value | capitalize }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
 
-		<div class="form-group">
-			<label class="form-label" for="starts-after">Starts after</label>
-			<input id="starts-after" name="starts-after" type="date" class="form-input" 
-				value="{{ uri.param('starts-after') }}">
-		</div>
+        <div class="form-group date">
+            <label class="form-label" for="starts-after">Starts after</label>
+            <input id="starts-after" name="starts-after" type="date" class="form-input" value="{{ uri.param('starts-after') }}">
+        </div>
 
-		<div class="form-group">
-			<label class="form-label" for="ends-before">Ends before</label>
-			<input id="ends-before" name="ends-before" type="date" class="form-input" 
-				value="{{ uri.param('ends-before') }}">
-		</div>
+        <div class="form-group date">
+            <label class="form-label" for="ends-before">Ends before</label>
+            <input id="ends-before" name="ends-before" type="date" class="form-input" value="{{ uri.param('ends-before') }}">
+        </div>
 
-		<div class="button-group">
-			<a id="submit" href="" class="btn">Search</a>
-			<a id="reset" href="" class="btn">Reset</a>
-		</div>
-	</form>
+        <div class="button-group">
+            <a id="submit" href="" class="btn">Search</a>
+            <a id="reset" href="" class="btn">Reset</a>
+        </div>
+    </div>
 {% endif %}

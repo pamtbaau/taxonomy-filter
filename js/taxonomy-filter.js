@@ -42,26 +42,26 @@ class TaxonomyFilter {
      */
     addFiltersToPath(pathname) {
         const form = document.getElementById('taxonomy-filter');
-        const formFields = new FormData(form);
+        const checkBoxes = form.querySelectorAll('[taxon]');
         const fieldValues = {};
-        for (const key of formFields.keys()) {
-            if (key.match(/(starts-after|ends-before)/)) {
+        for (const checkbox of checkBoxes) {
+            if (!checkbox.checked) {
                 continue;
             }
-            // let taxonomy, taxon;
-            const [taxonomy, taxon] = key.split('-');
-            if (!fieldValues[taxonomy]) {
-                fieldValues[taxonomy] = '';
+            const taxon = checkbox.getAttribute('taxon');
+            const value = checkbox.getAttribute('taxonvalue');
+            if (!fieldValues[taxon]) {
+                fieldValues[taxon] = '';
             }
-            fieldValues[taxonomy] += (fieldValues[taxonomy] ? `,${taxon}` : taxon);
+            fieldValues[taxon] += (fieldValues[taxon] ? `,${value}` : value);
         }
-        const startDate = formFields.get('starts-after');
-        const endDate = formFields.get('ends-before');
-        if (startDate) {
-            fieldValues['starts-after'] = startDate;
+        const startDate = form.querySelector('#starts-after');
+        const endDate = form.querySelector('#ends-before');
+        if (startDate && startDate.value !== '') {
+            fieldValues['starts-after'] = startDate.value;
         }
-        if (endDate) {
-            fieldValues['ends-before'] = endDate;
+        if (endDate && endDate.value !== '') {
+            fieldValues['ends-before'] = endDate.value;
         }
         let params = '';
         for (const entry of Object.entries(fieldValues)) {
