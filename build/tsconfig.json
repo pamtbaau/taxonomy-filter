@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "es2017",
+    "module": "es2015", 
+    "sourceMap": true,
+    "outDir": "../js",
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  
+  "include": [
+    "ts/**/*"
+  ],
+  "exclude": [
+      "node_modules",
+      "js"
+  ]
+}

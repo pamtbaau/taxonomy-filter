@@ -1,0 +1,28 @@
+{
+  "name": "pamtbaau/taxonomy-filter",
+  "type": "grav-plugin",
+  "description": "Grav plugin to filter blog items using multiple taxonomies",
+  "keywords": ["plugin"],
+  "homepage": "https://github.com/pamtbaau/taxonomy-filter",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "pamtbaau",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.3.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Grav\\Plugin\\TaxonomyFilter\\": "classes/"
+    },
+    "classmap":  ["taxonomy-filter.php"]
+  },
+  "config": {
+    "platform": {
+      "php": "7.3.6"
+    }
+  }
+}

@@ -1,0 +1,4 @@
+en:
+  PLUGIN_TAXONOMY_FILTER:
+    ISPRODUCTION: Production mode
+    ISPRODUCTION_HELP: In production, minified assets will be loaded

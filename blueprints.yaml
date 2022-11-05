@@ -1,0 +1,53 @@
+name: Taxonomy Filter
+slug: taxonomy-filter
+type: plugin
+version: 1.0.0
+description: Grav plugin to filter blog items using multiple taxonomies
+icon: plug
+author:
+  name: pamtbaau
+  email: 
+homepage: 
+keywords: grav, plugin, etc
+bugs: 
+docs: 
+license: MIT
+
+dependencies:
+  - { name: grav, version: '>=1.7.0' }
+  - { name: taxonomylist, version: '>=1.3.5' }
+
+form:
+  validation: loose
+  fields:
+    enabled:
+      type: toggle
+      label: PLUGIN_ADMIN.PLUGIN_STATUS
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+    isProduction:
+      type: toggle
+      label: PLUGIN_TAXONOMY_FILTER.ISPRODUCTION
+      help: PLUGIN_TAXONOMY_FILTER.ISPRODUCTION_HELP
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool
+    taxonomies:
+      type: selectize
+      # selectize:
+      config-options@: site.taxonomies
+      size: large
+      label: PLUGIN_ADMIN.TAXONOMY_TYPES
+      classes: fancy
+      help: PLUGIN_ADMIN.TAXONOMY_TYPES_HELP
+      validate:
+          type: commalist

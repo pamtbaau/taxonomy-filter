@@ -1,0 +1,9 @@
+/build/node_modules
+/vendor/*
+!/vendor/autoload.php
+!/vendor/composer
+
+# Ignore VSCode files
+.vscode/
+.plugin.code-workspace
+

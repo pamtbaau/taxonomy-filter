@@ -1,0 +1,1 @@
+{"version":3,"sources":["../build/scss/style.scss"],"names":[],"mappings":"AAAA,iBACE,cAAA,KAEA,iCACI,WAAA,KAGJ,6BACE,QAAA,MAGF,+BACI,WAAA","sourcesContent":["#taxonomy-filter {\n  margin-bottom: 1rem;\n\n  .taxonomy-title {\n      margin-top: 1rem;\n  }\n  \n  .form-group {\n    display: block;\n  }\n\n  .button-group {\n      margin-top: 1rem;\n  }\n}\n"]}
