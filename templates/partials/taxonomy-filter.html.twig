@@ -2,6 +2,8 @@
 
 {% if taxlist %}
     <div id="taxonomy-filter">
+        {% set index = 0 %}
+        
         {% for taxon in config.plugins['taxonomy-filter'].taxonomies %}
             {% set selectedTaxList = uri.param(taxon | url_encode) | split(',') %}
 
@@ -11,9 +13,11 @@
                     {% set checked = (value in selectedTaxList) ? 'checked' : '' %}
 
                     <div class="form-group">
-                        <input taxon="{{ taxon }}" taxonvalue="{{ value}}" type="checkbox" {{ checked }}>
+                        <input id="field{{ index }}" taxon="{{ taxon }}" taxonvalue="{{ value}}" type="checkbox" {{ checked }}>
                         <label for="field{{ index }}">{{ value | capitalize }}</label>
                     </div>
+
+                    {% set index = index + 1 %}
                 {% endfor %}
             </div>
         {% endfor %}
