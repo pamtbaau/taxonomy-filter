@@ -1,4 +1,4 @@
-declare const taxonomyFilters: { blog: string, items: string };
+declare const taxonomyFilter: { route: string };
 
 class TaxonomyFilter {
 
@@ -22,7 +22,7 @@ class TaxonomyFilter {
         submitBtn.addEventListener('click', (event) => {
             event.preventDefault();
 
-            let path = this.getCollectionPath();
+            let path = taxonomyFilter.route;
             path = this.addFiltersToPath(path);
 
             window.location.href = path;
@@ -32,19 +32,10 @@ class TaxonomyFilter {
         resetBtn.addEventListener('click', (event) => {
             event.preventDefault();
 
-            const path = this.getCollectionPath();
+            const path = taxonomyFilter.route;
 
             window.location.href = path;
         })
-    }
-
-    /**
-     * Get the relative path of the page containing the collection to filter.
-     * 
-     * @returns The relative path to page containing the collection.
-     */
-    protected getCollectionPath(): string {
-        return taxonomyFilters.blog;
     }
 
     /**
@@ -72,6 +63,12 @@ class TaxonomyFilter {
             }
 
             fieldValues[taxon] += (fieldValues[taxon] ? `,${value}` : value);
+        }
+
+        const operator = form.querySelector('input[name="operator"]:checked') as HTMLInputElement | null;
+
+        if (operator) {
+            fieldValues['operator'] = operator.value;
         }
         
         const startDate = form.querySelector('#starts-after') as HTMLInputElement | null;

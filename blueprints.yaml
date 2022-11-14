@@ -30,6 +30,31 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
+    routes:
+      type: array
+      value_only: true
+      label: PLUGIN_TAXONOMY_FILTER.ROUTES
+      help: PLUGIN_TAXONOMY_FILTER.ROUTES_HELP
+    taxonomies:
+      type: selectize
+      selectize:
+        data-options@: '\Grav\Plugin\TaxonomyFilterPlugin::getTaxonomies'
+      size: large
+      label: PLUGIN_TAXONOMY_FILTER.TAXONOMIES
+      classes: fancy
+      help: PLUGIN_TAXONOMY_FILTER.TAXONOMIES_HELP
+      validate:
+        type: commalist
+    operator:
+      type: select
+      size: large
+      label: PLUGIN_TAXONOMY_FILTER.OPERATOR
+      classes: fancy
+      help: PLUGIN_TAXONOMY_FILTER.OPERATOR_HELP
+      default: or
+      options:
+        and: PLUGIN_TAXONOMY_FILTER.AND
+        or: PLUGIN_TAXONOMY_FILTER.OR
     isProduction:
       type: toggle
       label: PLUGIN_TAXONOMY_FILTER.ISPRODUCTION
@@ -41,13 +66,3 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
-    taxonomies:
-      type: selectize
-      # selectize:
-      config-options@: site.taxonomies
-      size: large
-      label: PLUGIN_ADMIN.TAXONOMY_TYPES
-      classes: fancy
-      help: PLUGIN_ADMIN.TAXONOMY_TYPES_HELP
-      validate:
-          type: commalist

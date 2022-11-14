@@ -15,24 +15,16 @@ class TaxonomyFilter {
         // 'Submit' button adds Taxonomy filters to the url and navigates to it
         submitBtn.addEventListener('click', (event) => {
             event.preventDefault();
-            let path = this.getCollectionPath();
+            let path = taxonomyFilter.route;
             path = this.addFiltersToPath(path);
             window.location.href = path;
         });
         // 'Reset' button clears all checkboxes and navigates to url without Taxonumy filters
         resetBtn.addEventListener('click', (event) => {
             event.preventDefault();
-            const path = this.getCollectionPath();
+            const path = taxonomyFilter.route;
             window.location.href = path;
         });
-    }
-    /**
-     * Get the relative path of the page containing the collection to filter.
-     *
-     * @returns The relative path to page containing the collection.
-     */
-    getCollectionPath() {
-        return taxonomyFilters.blog;
     }
     /**
      * Create url for current page with Taxonomy filters appended to it
@@ -54,6 +46,10 @@ class TaxonomyFilter {
                 fieldValues[taxon] = '';
             }
             fieldValues[taxon] += (fieldValues[taxon] ? `,${value}` : value);
+        }
+        const operator = form.querySelector('input[name="operator"]:checked');
+        if (operator) {
+            fieldValues['operator'] = operator.value;
         }
         const startDate = form.querySelector('#starts-after');
         const endDate = form.querySelector('#ends-before');

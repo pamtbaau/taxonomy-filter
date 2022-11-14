@@ -1,4 +1,15 @@
 en:
   PLUGIN_TAXONOMY_FILTER:
+    TITLE: Filter articles
+    TAXONOMIES: List of taxonomies
+    TAXONOMIES_HELP: List of taxonomies to use. Defaults to all taxonomies defined.
+    OPERATOR: Select articles containing:
+    OPERATOR_HELP: Articles must contain
+    AND: All filters
+    OR: Any filter
+    STARTSAFTER: Starts after
+    ENDSBEFORE: Ends before
+    ROUTES: Enable on routes
+    ROUTES_HELP: List of routes to eneable plugin
     ISPRODUCTION: Production mode
     ISPRODUCTION_HELP: In production, minified assets will be loaded

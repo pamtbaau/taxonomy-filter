@@ -1,15 +1,17 @@
-{% set taxlist = children_only is defined ? taxonomylist.getChildPagesTags() : taxonomylist.get() %}
+{% set taxonomyMap = taxonomy.taxonomy %}
 
-{% if taxlist %}
+{% if taxonomyMap %}
     <div id="taxonomy-filter">
+        <h4>{{ 'PLUGIN_TAXONOMY_FILTER.TITLE' | t }}</h4>
         {% set index = 0 %}
-        
-        {% for taxon in config.plugins['taxonomy-filter'].taxonomies %}
+        {% set filters = config.plugins['taxonomy-filter'].taxonomies ?: array_keys(taxonomyMap) %}
+
+        {% for taxon in filters %}
             {% set selectedTaxList = uri.param(taxon | url_encode) | split(',') %}
 
             <h5 class="taxon-title">{{ taxon | capitalize }}</h5>
             <div class="taxon-group">
-                {% for value, count in taxlist[taxon] %}
+                {% for value, count in taxonomyMap[taxon] %}
                     {% set checked = (value in selectedTaxList) ? 'checked' : '' %}
 
                     <div class="form-group">
@@ -23,13 +25,25 @@
         {% endfor %}
 
         <div class="form-group date">
-            <label class="form-label" for="starts-after">Starts after</label>
+            <h5 class="title">{{ 'PLUGIN_TAXONOMY_FILTER.STARTSAFTER' | t }}</h5>
             <input id="starts-after" name="starts-after" type="date" class="form-input" value="{{ uri.param('starts-after') }}">
         </div>
 
         <div class="form-group date">
-            <label class="form-label" for="ends-before">Ends before</label>
+            <h5 class="title">{{ 'PLUGIN_TAXONOMY_FILTER.ENDSBEFORE' | t }}</h5>
             <input id="ends-before" name="ends-before" type="date" class="form-input" value="{{ uri.param('ends-before') }}">
+        </div>
+
+        <div class="form-group andor">
+            {% set operator = uri.param('operator') ?: config.plugins['taxonomy-filter'].operator %}
+            
+            <h5 class="title">{{ 'PLUGIN_TAXONOMY_FILTER.OPERATOR' | t }}</h5>
+
+            <input type="radio" id="and" name="operator" value="and" {{ operator == 'and' ? 'checked' : ''}}>
+            <label for="and">{{ 'PLUGIN_TAXONOMY_FILTER.AND' | t }}</label>
+
+            <input type="radio" id="or" name="operator" value="or" {{ operator == 'or' ? 'checked' : ''}}>
+            <label for="or">{{ 'PLUGIN_TAXONOMY_FILTER.OR' | t }}</label>
         </div>
 
         <div class="button-group">

@@ -1,12 +1,13 @@
 #taxonomy-filter {
   margin-bottom: 1rem;
 
-  .taxon-title {
+  .taxon-title,
+  .form-group .title {
       margin-top: 1rem;
   }
   
-  .form-group.date {
-    margin-top: 1rem;
+  .form-group #or {
+    margin-left: 1rem;
   }
 
   .button-group {

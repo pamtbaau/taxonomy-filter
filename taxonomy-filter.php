@@ -5,9 +5,13 @@ namespace Grav\Plugin;
 use Composer\Autoload\ClassLoader;
 use DateTime;
 use Grav\Common\Assets;
+use Grav\Common\Config\Config;
+use Grav\Common\Grav;
 use Grav\Common\Page\Collection;
 use Grav\Common\Page\Page;
 use Grav\Common\Plugin;
+use Grav\Common\Taxonomy;
+use Grav\Common\Twig\Twig;
 use Grav\Common\Uri;
 use RocketTheme\Toolbox\Event\Event;
 
@@ -18,7 +22,7 @@ use RocketTheme\Toolbox\Event\Event;
 class TaxonomyFilterPlugin extends Plugin
 {
 
-    protected array $routes;
+    protected string $route;
 
     /**
      * @return array
@@ -39,6 +43,26 @@ class TaxonomyFilterPlugin extends Plugin
                 ['onPluginsInitialized', 0]
             ]
         ];
+    }
+
+    public static function getTaxonomies(): array
+    {
+        $grav = Grav::instance();
+
+        /** @var Config */
+        $config = $grav['config'];
+        $taxonomies = $config->get('site.taxonomies');
+
+        $taxons = [];
+        
+        foreach($taxonomies as $taxon) {
+            $taxons[] = [
+                'text' => $taxon,
+                'value' => $taxon,
+            ];
+        }
+
+        return $taxons;
     }
 
     /**
@@ -86,13 +110,11 @@ class TaxonomyFilterPlugin extends Plugin
         $routes = $this->config->get('plugins.' . $this->name . '.routes');
 
         foreach ($routes as $route) {
-            ['blog' => $blog, 'items' => $items] = $route;
-            if ($path === $blog || str_starts_with($path, $items)) {
+            if ($path === $route) {
                 if ($lang) {
-                    $route['blog'] = '/' . $lang . $route['blog'];
-                    $route['items'] = '/' . $lang . $route['items'];
+                    $route = str_ends_with($route, '/') ? "$route$lang" : "$route/$lang";
                 }
-                $this->routes = $route;
+                $this->route = $route;
 
                 return true;
             }
@@ -130,7 +152,7 @@ class TaxonomyFilterPlugin extends Plugin
             ['group' => 'head', 'position' => 'after', 'loading' => 'defer']
         );
         $assets->addInlineJs(
-            "const taxonomyFilters = " . json_encode($this->routes),
+            "const taxonomyFilter = " . json_encode(['route' => $this->route]),
             ['group' => 'head', 'position' => 'after']
         );
     }
@@ -178,6 +200,19 @@ class TaxonomyFilterPlugin extends Plugin
                     }
                 }
             }
+        }
+
+        $operator =  $uri->param('operator') ?: strtolower($this->config->get("plugins.$this->name.operator", 'and'));
+
+        if (isset($collection->params()['taxonomies']) && $operator === 'or') {
+            $taxonomies = $collection->params()['taxonomies'];
+
+            /** @var Taxonomy */
+            $taxonomy = $this->grav['taxonomy'];
+
+            $orCollection = $taxonomy->findTaxonomy($taxonomies, 'or');
+
+            $collection->merge($orCollection);
         }
     }
 }

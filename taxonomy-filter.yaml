@@ -1,6 +1,7 @@
 enabled: true                # Disable or enable plugin. Default true;
 routes:                      # Array of routes on which the plugin should be enabled. No language prefix needed.
-  - blog: /
-    items: /blog                  
-taxonomies: [category, tag]  # Array of taxonomies to display in list
+  - /                
+taxonomies: []               # List of taxonomies to display in filter. When emmpty site.taxonomies is used.
+operator: and                 # and|or (default 'and') Use 'and' when page requires all selected filters, 
+                             # use 'or' if page requires any of selected filters
 isProduction: true           # Load minified css/js when true. Default true
